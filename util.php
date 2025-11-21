@@ -97,6 +97,12 @@
         return ["A" => "Aperitivos/Bitz", "B" => "Bolinhas", "P" => "Palitinhos", "S" => "Salgadão", "T" => "Tortilhos"];
     }
 
+    function getSet()
+    {
+        // Basta incluir no array abaixo os valores desejados que o sistema se atualiza
+        return ["A" => "Alfajor", "P" => "Paçoca", "F" => "Forno", "S" => "Salgados"];
+    }
+
     function timeToFloat($time)
     {
         $exp = explode(":", $time);

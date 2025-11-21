@@ -1,2 +1,0 @@
-# sisproKlain
-Sistema Retaguarda Klain

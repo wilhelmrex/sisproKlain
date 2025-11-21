@@ -42,6 +42,7 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Cadastros</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="index.php?p=temperos">Temperos</a></li>
+                    <li><a class="dropdown-item" href="index.php?p=motIntervalos">Motivos de Intervalo</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">

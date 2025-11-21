@@ -240,4 +240,31 @@
         exit;
     }    
 
+    /**********************************
+     * Add Motivo
+     */
+    if ($_REQUEST["exec"] == "addMot")
+    {
+        $sqlAddMot = $PDOMysql->prepare("
+        INSERT INTO motcad (mot_set, mot_des, mot_ativo) VALUES (?, ?, ?)
+        ");
+        $sqlAddMot->execute(array($selectSetor, $txtDescricao, $selectAtivo));
+
+        header("Location: index.php?p=motIntervalos");
+        exit;
+    }
+
+    /**********************************
+     * Edt Motivo
+     */
+    if ($_REQUEST["exec"] == "edtMot")
+    {
+        $sqlEdtMot = $PDOMysql->prepare("
+        UPDATE motcad SET mot_set = ?, mot_des = ?, mot_ativo = ? WHERE mot_cod = ?
+        ");
+        $sqlEdtMot->execute(array($selectSetor, $txtDescricao, $selectAtivo, $motCod));
+
+        header("Location: index.php?p=motIntervalos");
+        exit;
+    }
 ?>

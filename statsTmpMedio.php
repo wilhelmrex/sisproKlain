@@ -111,7 +111,7 @@ if (isset($prdCod))
 
         $data = date("d/m/Y", strtotime($dadosLanc["LAN_DAT"]));
 
-        array_unshift($arrayDados, array($data, $dadosLanc["LAN_UN"], $massadasHora, number_format($massadasHora, 3, ",", "."), $tempoMassada, floatToTime($tempoMassada)));
+        array_unshift($arrayDados, array($data, $dadosLanc["LAN_UN"], $massadasHora, number_format($massadasHora, 3, ",", "."), $tempoMassada, floatToTime($tempoMassada), $dadosLanc["LAN_COD"]));
     }
 
     if ($arrayDados)
@@ -126,23 +126,22 @@ if (isset($prdCod))
 
         function drawVisualization() {
             var data = google.visualization.arrayToDataTable([
-            ['Data', 'Bateladas/Unidades', {role: 'annotation'}, 'Bat/Un p/ Hora', {role: 'annotation'}, 'Tempo Médio Bat/Un', {role: 'annotation'}, {role: 'text'}],
+            ['Data', 'Bateladas/Unidades', {role: 'annotation'}, 'Bat/Un p/ Hora', {role: 'annotation'}, 'Tempo Médio Bat/Un', {role: 'annotation'}],
             <?php
             foreach ($arrayDados as $dados)
             {
                 ?>
-                ['<?=$dados[0]?>', <?=$dados[1]?>, <?=$dados[1]?>, <?=$dados[2]?>, '<?=$dados[3]?>', <?=$dados[4]?>, '<?=$dados[5]?>', 'www.google.com.br'],
-
-
+                ['<?=$dados[0]?>', <?=$dados[1]?>, <?=$dados[1]?>, <?=$dados[2]?>, '<?=$dados[3]?>', <?=$dados[4]?>, '<?=$dados[5]?>'],
                 <?php
             }
             ?>
             ]);
 
             var options = {
-                title: 'Acompanhamento de Produção',
+                //title: 'Company Performance',
                 legend: 'top',
                 pointSize: 5,
+                tooltip: { trigger: 'selection' },
                 series: {
                     0: {targetAxisIndex: 0, type: 'bars', color: '#0d6efd'},
                     1: {targetAxisIndex: 1, type: 'line', color: '#dc3545'},
@@ -153,11 +152,28 @@ if (isset($prdCod))
                     1: {title: 'Bateladas/Unidades'}
                 },
                 hAxis: {title: 'Data'},
-                
-                
             };
 
             var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+
+            chart.setAction({
+                id: 'sample',
+                text: 'Abrir lançamento',
+                action: function() {
+                    selection = chart.getSelection();
+                    switch (selection[0].row) {
+                        <?php
+                            foreach ($arrayDados as $key => $dados)
+                            {
+                            ?>
+                            case <?=$key?>: window.open("index.php?p=lan&lanCod=<?=$dados[6]?>", "blank"); break;
+                            <?php
+                            }
+                        ?>
+                    }
+                }
+            });
+
             chart.draw(data, options);
 
             var limpar = document.getElementById("btnLimpar");
